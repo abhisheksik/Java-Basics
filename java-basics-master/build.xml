@@ -3,25 +3,14 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="java-basics-master">
-    <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../eclipse/jee-2023-06/eclipse/"/>
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="20"/>
-    <property name="source" value="20"/>
-    <path id="java-basics-master.classpath"/>
-    <target name="init"/>
-    <target name="clean"/>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-    </target>
-    
+              as the first entry and export the buildfile again. --><<project name="YourProject" default="compile" basedir=".">
+
+    <!-- Define properties -->
     <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="war.dir" value="war"/>
+    <property name="war.file" value="YourProject.war"/>
 
     <!-- Define the compile target -->
     <target name="compile" description="Compile Java source files">
@@ -32,19 +21,16 @@
         <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
     </target>
 
-                
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
+    <!-- Define the war target -->
+    <target name="war" depends="compile" description="Create WAR file">
+        <!-- Create the WAR directory if it doesn't exist -->
+        <mkdir dir="${war.dir}"/>
+
+        <!-- Create the WAR file -->
+        <war destfile="${war.dir}/${war.file}" webxml="${src.dir}/WEB-INF/web.xml">
+            <fileset dir="${src.dir}"/>
+            <lib dir="${classes.dir}"/>
+        </war>
     </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
+
 </project>
