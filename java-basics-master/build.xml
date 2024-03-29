@@ -14,6 +14,9 @@
         <!-- Create the WAR directory if it doesn't exist -->
         <mkdir dir="${war.dir}"/>
 
+	<!-- Create the classes directory if it doesn't exist -->
+        <mkdir dir="${classes.dir}"/>
+
         <!-- Create the WAR file -->
     	<war destfile="${war.dir}/${war.file}" webxml="${basedir}/empty-web.xml">
     	            <fileset dir="${src.dir}"/>
