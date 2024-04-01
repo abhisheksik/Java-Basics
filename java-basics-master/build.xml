@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- WARNING: Eclipse auto-generated file.
               Any modifications will be overwritten.
@@ -6,8 +5,6 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. -->
 
-=======
->>>>>>> 1ade741bc4e96d871222510a189fe0e05d373bdf
 <project name="YourProject" default="war" basedir=".">
 
     <!-- Define properties -->
@@ -23,15 +20,9 @@
     <target name="war" description="Create WAR file">
         <!-- Create the WAR directory if it doesn't exist -->
         <mkdir dir="${war.dir}"/>
-<<<<<<< HEAD
-    	
-    	<!-- Create the classes directory if it doesn't exist -->
-    	<mkdir dir="${classes.dir}"/>
-=======
 
 	<!-- Create the classes directory if it doesn't exist -->
         <mkdir dir="${classes.dir}"/>
->>>>>>> 1ade741bc4e96d871222510a189fe0e05d373bdf
 
         <!-- Create the WAR file -->
     	<war destfile="${war.dir}/${war.file}" webxml="${basedir}/empty-web.xml">
@@ -40,8 +31,4 @@
     	        </war>
 	</target>
 
-<<<<<<< HEAD
 </project>
-=======
-</project>
->>>>>>> 1ade741bc4e96d871222510a189fe0e05d373bdf
