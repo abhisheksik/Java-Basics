@@ -3,33 +3,32 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="java-basics-master">
-    <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../eclipse/jee-2023-06/eclipse/"/>
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="20"/>
-    <property name="source" value="20"/>
-    <path id="java-basics-master.classpath"/>
-    <target name="init"/>
-    <target name="clean"/>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-    </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
+              as the first entry and export the buildfile again. -->
+
+<project name="YourProject" default="war" basedir=".">
+
+    <!-- Define properties -->
+    <property name="src.dir" value="."/>
+    <property name="build.dir" value="C:\ProgramData\Jenkins\.jenkins\workspace"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="war.dir" value="C:\ProgramData\Jenkins\.jenkins\workspace"/>
+    <property name="war.file" value="java-basics-master.war"/>
+
+    
+
+    <!-- Define the war target -->
+    <target name="war" description="Create WAR file">
+        <!-- Create the WAR directory if it doesn't exist -->
+        <mkdir dir="${war.dir}"/>
+    	
+    	<!-- Create the classes directory if it doesn't exist -->
+    	<mkdir dir="${classes.dir}"/>
+
+        <!-- Create the WAR file -->
+    	<war destfile="${war.dir}/${war.file}" webxml="${basedir}/empty-web.xml">
+    	            <fileset dir="${src.dir}"/>
+    	            <classes dir="${classes.dir}"/>
+    	        </war>
+	</target>
+
 </project>
